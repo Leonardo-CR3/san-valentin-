@@ -2,138 +2,105 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>San Valentín 💘</title>
+<title>Para ti 💘</title>
 
 <style>
-    body {
-        margin: 0;
-        overflow: hidden;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
 
-    h1 {
-        font-size: 45px;
-        color: white;   
-        animation: latido 1s infinite alternate;
-        text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-    }
+/* Carta */
+.carta {
+    width: 200px;
+    height: 150px;
+    background: white;
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s;
+}
 
-    @keyframes latido {
-        from { transform: scale(1); }
-        to { transform: scale(1.1); }
-    }
+.carta:hover {
+    transform: scale(1.1);
+}
 
-    .flores {
-        font-size: 50px;
-        margin-bottom: 10px;
-    }
+.carta::before {
+    content: "💌";
+    font-size: 50px;
+}
 
-    button {
-        padding: 15px 30px;
-        font-size: 20px;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        position: absolute;
-        transition: 0.2s;
-    }
+/* Mensaje oculto */
+.mensaje {
+    position: absolute;
+    width: 80%;
+    max-width: 400px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    display: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
 
-    #si {
-        background-color: #ff4d6d;
-        color: white;
-        left: 40%;
-        top: 65%;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
+/* Corazones */
+.corazon {
+    position: absolute;
+    font-size: 20px;
+    animation: flotar linear infinite;
+}
 
-    #no {
-        background-color: #444;
-        color: white;
-        left: 55%;
-        top: 65%;
-    }
-
-    .corazon {
-        position: absolute;
-        color: rgba(255,255,255,0.7);
-        font-size: 20px;
-        animation: flotar linear infinite;
-    }
-
-    @keyframes flotar {
-        from {
-            transform: translateY(100vh);
-        }
-        to {
-            transform: translateY(-10vh);
-        }
-    }
+@keyframes flotar {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
+}
 </style>
 </head>
 
 <body>
 
-<div class="flores">💐🌸🌷🌹</div>
-<h1>¿Quieres ser mi San Valentín Sayuri? </h1>
+<div class="carta" onclick="abrirCarta()"></div>
 
-<button id="si">Sí 💖</button>
-<button id="no">No 😢</button>
+<div class="mensaje" id="mensaje">
+    <h2>Feliz 1 Mes 💘</h2>
+    <p>
+        Gracias por este mes tan bonito contigo 🥺💖  
+        Cada momento a tu lado es especial  
+        y quiero seguir viviendo muchos más contigo 😏💘
+    </p>
+</div>
 
 <script>
-    const botonNo = document.getElementById("no");
-    const botonSi = document.getElementById("si");
+function abrirCarta() {
+    document.querySelector(".carta").style.display = "none";
+    document.getElementById("mensaje").style.display = "block";
+}
 
-    function moverBoton() {
-        const ancho = window.innerWidth - 120;
-        const alto = window.innerHeight - 120;
+// corazones flotando
+function crearCorazon() {
+    const corazon = document.createElement("div");
+    corazon.classList.add("corazon");
+    corazon.innerHTML = "💖";
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(corazon);
 
-        const nuevoX = Math.random() * ancho;
-        const nuevoY = Math.random() * alto;
+    setTimeout(() => {
+        corazon.remove();
+    }, 6000);
+}
 
-        botonNo.style.left = nuevoX + "px";
-        botonNo.style.top = nuevoY + "px";
-
-        botonNo.style.transform = `rotate(${Math.random() * 30}deg)`;
-    }
-
-    document.addEventListener("mousemove", (e) => {
-        const rect = botonNo.getBoundingClientRect();
-        const distanciaX = e.clientX - rect.left;
-        const distanciaY = e.clientY - rect.top;
-        const distancia = Math.sqrt(distanciaX * distanciaX + distanciaY * distanciaY);
-
-        if (distancia < 150) {
-            moverBoton();
-        }
-    });
-
-    botonNo.addEventListener("mouseover", moverBoton);
-
-    botonSi.addEventListener("click", () => {
-        alert("Sabía que dirías que SÍ 💖");
-    });
-
-    // Crear corazones flotando
-    function crearCorazon() {
-        const corazon = document.createElement("div");
-        corazon.classList.add("corazon");
-        corazon.innerHTML = "💖";
-        corazon.style.left = Math.random() * 100 + "vw";
-        corazon.style.animationDuration = (Math.random() * 3 + 3) + "s";
-        document.body.appendChild(corazon);
-
-        setTimeout(() => {
-            corazon.remove();
-        }, 6000);
-    }
-
-    setInterval(crearCorazon, 300);
+setInterval(crearCorazon, 300);
 </script>
 
 </body>
